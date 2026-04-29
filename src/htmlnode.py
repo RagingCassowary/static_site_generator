@@ -27,5 +27,30 @@ class HTMLNode():
             report += f", props=[{self.props_to_html()}]"
         report += ")"
         return report
+    
+class LeafNode(HTMLNode):
+
+    def __init__(self, tag, value, props=None):
+        super().__init__(tag, value, None, props)
+
+    def to_html(self):
+        if self.value is None:
+            raise ValueError("All leaf nodes must have a value")
+        if self.tag is None:
+            return self.value
+        return (
+            "<" + self.tag + ">" +
+            self.value +
+            "</" + self.tag + ">" 
+        )
+    
+    def __repr__(self):
+        report = f"LeafNode({self.tag}, {self.value}"
+        if self.props is not None:
+            report += f", props=[{self.props_to_html()}]"
+        report += ")"
+        return report
+
+
 
 
