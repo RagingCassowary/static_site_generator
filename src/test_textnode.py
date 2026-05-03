@@ -5,13 +5,13 @@ from textnode import TextNode, TextType
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
-        node = TextNode("This is a text node", TextType.BOLD_TEXT)
-        node2 = TextNode("This is a text node", TextType.BOLD_TEXT)
+        node = TextNode("This is a text node", TextType.BOLD)
+        node2 = TextNode("This is a text node", TextType.BOLD)
         self.assertEqual(node, node2)
 
     def test_not_eq(self):
-        node = TextNode("This is a text node", TextType.BOLD_TEXT)
-        node2 = TextNode("This is a text node", TextType.PLAIN_TEXT)
+        node = TextNode("This is a text node", TextType.BOLD)
+        node2 = TextNode("This is a text node", TextType.TEXT)
         self.assertNotEqual(node, node2)
     
     def test_no_url(self):
@@ -19,7 +19,7 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(node.url, None)
 
     def test_print(self):
-        node = TextNode("This is a text node", TextType.PLAIN_TEXT)
+        node = TextNode("This is a text node", TextType.TEXT)
         self.assertEqual(node.__repr__(), "TextNode(This is a text node, text, None)")
     
     def test_enum(self):

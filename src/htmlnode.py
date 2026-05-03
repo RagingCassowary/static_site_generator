@@ -12,8 +12,10 @@ class HTMLNode():
     def props_to_html(self):
         result = ""
         if self.props is not None:
-            for prop in self.props:
-                result += f'{prop}="{self.props[prop]}"'
+            if self.tag == "a":
+                return f'href="{self.props["href"]}"'
+            if self.tag == "img":
+                return f'src="{self.props["src"]}" alt="{self.props["alt"]}"'
         return result
     
     def __repr__(self):
@@ -21,7 +23,7 @@ class HTMLNode():
         if self.children is not None:
             report += ", children=["
             for child in self.children:
-                report += child.value + ", "
+                report += f'"{child.tag}",'
             report += "]"
         if self.props is not None:
             report += f", props=[{self.props_to_html()}]"
@@ -39,10 +41,16 @@ class LeafNode(HTMLNode):
         if self.tag is None:
             return self.value
         if self.props is not None:
-            return (
-                f"<{self.tag} " + self.props_to_html() +
-                ">" + self.value + f"</{self.tag}>"
+            if self.tag == "a":
+                return (
+                    f"<{self.tag} " + self.props_to_html() +
+                    ">" + self.value + f"</{self.tag}>"
                     )
+            if self.tag == "img":
+                return(
+                    f"<{self.tag} " + self.props_to_html() +
+                    " />"
+                )
         return (
             "<" + self.tag + ">" +
             self.value +

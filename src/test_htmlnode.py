@@ -5,7 +5,7 @@ from htmlnode import HTMLNode, LeafNode, ParentNode
 class TestHTMLNode(unittest.TestCase):
     
     def test_props_to_html(self):
-        dummy = HTMLNode("h1", "heading", props={"href": "https://www.dummy.com"})
+        dummy = HTMLNode("a", "this is a link", props={"href": "https://www.dummy.com"})
 
         self.assertEqual(
             dummy.props_to_html(),
@@ -25,7 +25,7 @@ class TestHTMLNode(unittest.TestCase):
 
         self.assertEqual(
             dummy.__repr__(),
-            'HTMLNode(h1, heading, children=[paragraph, bold, ], props=[href="https://www.dummy.com"])'
+            'HTMLNode(h1, heading, children=["p","b",], props=[])'
                          )
         
     def test_leaf_to_html_p(self):
@@ -76,3 +76,18 @@ class TestHTMLNode(unittest.TestCase):
             parent.to_html(),
             '<h1>HEADING<p>This should be plain text, but<a href="https://www.example.link">this</a>should be a link.</p></h1>'
         )
+    
+    def test_img_to_html(self):
+        node = LeafNode("img", "", props={"src": "image.file", "alt": "example image"})
+        self.assertEqual(
+            node.to_html(),
+            '<img src="image.file" alt="example image" />'
+        )
+    
+    def test_invalid_props(self):
+        node = LeafNode("p", "I am not a link", props={"href": "invalid.link"})
+        self.assertEqual(
+            node.__repr__(),
+            "LeafNode(p, I am not a link, props=[])"
+        )
+    
