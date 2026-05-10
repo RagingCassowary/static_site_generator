@@ -1,11 +1,9 @@
 from textnode import *
 from htmlnode import *
+from functions.text_to_textnode import *
 
 def main():
-    dummyText = TextNode("Dummy anchor", "link", "https://wwww.fakelink.abc")
-    dummychild = HTMLNode("p", "paragraph")
-    dummyHTML = HTMLNode("h1", "heading", [dummychild], {"href": "https://www.dummy.com"})
-    return dummyText, dummyHTML
+    text_to_textnodes("This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)")
 
 print(main())
 

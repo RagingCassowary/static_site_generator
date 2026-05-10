@@ -19,7 +19,8 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
                         split = TextNode(split_nodes[i], TextType.TEXT)
                     else:
                         split = TextNode(split_nodes[i], text_type)
-                    new_nodes.append(split)
+                    if len(split.text) > 0:
+                        new_nodes.append(split)
     
     return new_nodes
 
@@ -27,6 +28,10 @@ def split_nodes_image(old_nodes):
     new_nodes = []
 
     for node in old_nodes:
+        if node.text_type != TextType.TEXT:
+            new_nodes.append(node)
+            continue
+
         text = node.text
 
         images = extract_markdown_images(node.text)
@@ -49,7 +54,7 @@ def split_nodes_image(old_nodes):
             last_node = TextNode(text, TextType.TEXT)
             new_nodes.append(last_node)
 
-        return new_nodes
+    return new_nodes
                 
 
 
@@ -57,6 +62,10 @@ def split_nodes_link(old_nodes):
     new_nodes = []
 
     for node in old_nodes:
+        if node.text_type != TextType.TEXT:
+            new_nodes.append(node)
+            continue
+
         text = node.text
 
         links = extract_markdown_links(node.text)
